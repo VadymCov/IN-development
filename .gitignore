@@ -3,9 +3,17 @@
 venv/
 env/
 
+# Python configuration with sensitive data
+config.py
+
 # Python cache
 __pycache__/
+
 
 # IDE files
 .idea/
 .vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
