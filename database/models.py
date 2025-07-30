@@ -2,7 +2,7 @@ import sqlite3
 
 
 def init_db():
-    con = sqlite3.connect('data_basa.db')
+    con = sqlite3.connect('data_base.db')
     cur = con.cursor()
     cur.execute('''
         CREATE TABLE IF NOT EXISTS words(
