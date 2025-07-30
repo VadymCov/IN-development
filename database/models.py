@@ -9,7 +9,8 @@ def init_db():
             id INTEGER PRIMARY KEY,
             user_id INTEGER,
             word TEXT,
-            translate TEXT,
+            word_usertrans TEXT,
+            word_googltrans TEXT,
             )
     ''')
     con.commit()
