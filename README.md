@@ -1,11 +1,13 @@
 ## 📚 Project Description
 
-This is a small educational project written in **Python** using the **aiogram** framework.  
-It helps me improve my skills in working with ***aiogram*** and **SQLite3**.
+This is a small educational project written in **Python** using the **aiogram** framework.
 
-### 🤖 Bot Features
+It helps me improve my skills with ***aiogram*** and **SQLite3**.
+
+### 🤖 Bot Functions
 - Adds sentences or words entered by the user in English
-- Displays stored words upon request
-- Translates selected word from English to the user's language
+- The user adds the translation of the word
+- Displays saved words on request
+- User kfv
 
-This bot is designed as a simple tool to help users **memorize English vocabulary** interactively via **Telegram**.
+This bot is designed as a simple tool to help users **remember English vocabulary** interactively via **Telegram**.
