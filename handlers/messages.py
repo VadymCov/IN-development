@@ -4,6 +4,7 @@ from deep_translator import GoogleTranslator
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
+
 from states.word_states import WordStates
 
 
@@ -13,6 +14,8 @@ translator = GoogleTranslator(source='en', target='ru')
 @message_router.message(WordStates.waiting_for_word)
 async def add_word_db(message: Message, state: FSMContext):
     user_word = message.text.split(' ')
+    # if len(user_word) < 2:
+    #     await message.answer("")   #################################### Added exanation
     user_id = message.from_user.id
     word = user_word[0]
     word_usertrans = user_word[1]
@@ -36,3 +39,5 @@ async def add_word_db(message: Message, state: FSMContext):
     con.commit()
     con.close()
     await state.clear()
+
+
