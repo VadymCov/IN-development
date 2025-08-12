@@ -1,5 +1,4 @@
-
-<<<<<<< HEAD
+import pygame
 class Player:
 
     def __init__(self, x=0, y=0):
@@ -57,5 +56,3 @@ class Game:
 if __name__ == "__main__":
     start = Game()
     start.run()
-=======
->>>>>>> 16229a26b9f1cf19398f5e5f6944213c604aa284
