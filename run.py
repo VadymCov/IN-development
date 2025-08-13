@@ -9,8 +9,9 @@ class Player:
         self.height = 20
         self.speed = 3
 
-    def keyboard_handler(self, screen_height):
+    def keyboard_player_handler(self, screen_height):
         keys = pygame.key.get_pressed()
+
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             if self.y > 0:
                 self.y -= self.speed
@@ -21,7 +22,28 @@ class Player:
     def draw(self, screen):
         pygame.draw.rect(screen,
                          (255, 0, 0),
-                         (self.x, self.y, self.width, self.height))
+                         (self.x, self.y, self.width, self.height)
+                         )
+
+class Bullet:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.radius = 3
+        self.speed = 3
+
+    def keyboard_bullet_handler(self, screen_width):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_SPACE]:
+            self.x = self.speed
+
+
+    def draw(self, screen):
+        pygame.draw.circle(screen,
+                            (255, 0, 0),
+                            (self.x,self.y),self.radius
+                           )
 
 class Game:
 
@@ -34,6 +56,7 @@ class Game:
             (self.width, self.height)
         )
         self.clock = pygame.time.Clock()
+
         self.player = Player()
 
     def run(self):
@@ -44,7 +67,7 @@ class Game:
                     running = False
 
             self.screen.fill((255,255,255))
-            self.player.keyboard_handler(self.height)
+            self.player.keyboard_player_handler(self.height)
             self.player.draw(self.screen)
             pygame.display.flip()
             self.clock.tick(60)
