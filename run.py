@@ -1,5 +1,8 @@
 import pygame
-class Player:
+from pygame.examples.midi import key_images
+
+
+class Player: # Responsible for creating figures and managing the figures that the player controls
 
     def __init__(self, x=0, y=0):
 
@@ -26,22 +29,34 @@ class Player:
                          )
 
 class Bullet:
-    def __init__(self, x, y):
+    def __init__(self, x, y ):
         self.x = x
         self.y = y
         self.radius = 3
         self.speed = 3
+        self.shot_delay = 0
+        self.bullets = []
 
-    def keyboard_bullet_handler(self, screen_width):
+    def keyboard_bullet_handler(self,  player_x, player_y):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_SPACE]:
-            self.x = self.speed
+        if self.shot_delay > 0:
+            self.shot_delay -= 1
 
+        if keys[pygame.K_SPACE] and self.shot_delay == 0:
+            bullet = Bullet(
+                player_x + 20,
+                player_y + 10
+            )
+            self.bullets.append(bullet)
+            self.shot_delay = 15
+
+    def update(self):
+        self.x += self.speed
 
     def draw(self, screen):
         pygame.draw.circle(screen,
-                            (255, 0, 0),
+                        (255, 0, 0),
                             (self.x,self.y),self.radius
                            )
 
@@ -58,6 +73,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.player = Player()
+        self.bullet = Bullet(self.player.x + self.player.width, self.player.y + self.player.height // 2)
 
     def run(self):
         running = True
@@ -66,9 +82,23 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
+
             self.screen.fill((255,255,255))
+
+
+            self.bullet.keyboard_bullet_handler(self.player.x, self.player.y)
+            for bull in self.bullet.bullets[:]:
+                bull.update()
+                if bull.x > self.width:
+                    self.bullet.bullets.remove(bull)
+
+
             self.player.keyboard_player_handler(self.height)
             self.player.draw(self.screen)
+
+            for boll in self.bullet.bullets:
+                boll.draw(self.screen)
+
             pygame.display.flip()
             self.clock.tick(60)
 
