@@ -1,11 +1,8 @@
 import pygame
-from pygame.examples.midi import key_images
-
 
 class Player: # Responsible for creating figures and managing the figures that the player controls
 
     def __init__(self, x=0, y=0):
-
         self.x = x
         self.y = y
         self.width = 20
@@ -29,7 +26,7 @@ class Player: # Responsible for creating figures and managing the figures that t
                          )
 
 class Bullet:
-    def __init__(self, x, y ):
+    def __init__(self, x=0, y=0 ):
         self.x = x
         self.y = y
         self.radius = 3
@@ -59,10 +56,20 @@ class Bullet:
                         (255, 0, 0),
                             (self.x,self.y),self.radius
                            )
+class Target:
+    def __init__(self, width, height):
+        self.x = width
+        self.y = height
+        self.width = 50
+        self.height = 50
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, (255, 0, 0),
+                         (self.x, self.y, self.width, self.height))
 
 class Game:
 
-    def __init__(self,width= 400, height= 300 ):
+    def __init__(self,width= 600, height= 300 ):
         pygame.init()
         pygame.display.set_caption("game name")
         self.width = width
@@ -73,7 +80,8 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.player = Player()
-        self.bullet = Bullet(self.player.x + self.player.width, self.player.y + self.player.height // 2)
+        self.bullet = Bullet()
+        self.target = Target(self.width - 50, self.height // 2)
 
     def run(self):
         running = True
@@ -82,19 +90,24 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
-
             self.screen.fill((255,255,255))
-
 
             self.bullet.keyboard_bullet_handler(self.player.x, self.player.y)
             for bull in self.bullet.bullets[:]:
                 bull.update()
-                if bull.x > self.width:
+                if bull.x >= self.width:
+                    bull.speed *= -1
+                if (bull.x <= self.player.x + self.player.width and
+                    bull.y >= self.player.y and
+                    bull.y + bull.radius <= self.player.y + self.player.height
+                ):
+                    bull.speed *= -1
+                elif bull.x < self.player.x:
                     self.bullet.bullets.remove(bull)
-
 
             self.player.keyboard_player_handler(self.height)
             self.player.draw(self.screen)
+            self.target.draw(self.screen)
 
             for boll in self.bullet.bullets:
                 boll.draw(self.screen)
