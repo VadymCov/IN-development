@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 
 class Player:
     def __init__(self, x=0, y=0):
@@ -55,8 +56,8 @@ class Target:
     def check_collision(self, bullet):
         return (bullet.x + bullet.radius >= self.x and
                 bullet.x - bullet.radius <= self.x + self.width and
-                bullet.y + bullet.radius <= self.y and
-                bullet.y - bullet.radius >= self.y + self.height)
+                bullet.y + bullet.radius >= self.y and
+                bullet.y - bullet.radius <= self.y + self.height)
 
 
     def is_off_screen(self):
@@ -69,14 +70,86 @@ class Game:
         pygame.display.set_caption("game name")
         self.width = width
         self.height = height
-        self.screen = pygame.display.set_mode(
-            (self.width, self.height)
-        )
+        self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
+        self.font = pygame.font.Font(None, 36)
 
-        self.player = Player()
-        self.bullet = Bullet()
-        self.target = Target(self.width - 50, self.height // 2)
+        # game objects
+        self.player = Player(10, self.height // 2)
+        self.bullets = []
+        self.targets = []
+
+        # game parameters
+        self.score = 0
+        self.target_speed = 1
+        self.shot_delay = 0
+        self.target_spawn_timer = 0
+        self.target_spawn_delay = 150
+
+    def keyboard_input_handlers(self):
+        keys = pygame.key.get_pressed()
+
+        self.player.keyboard_player_handler(self.height)
+
+        if self.shot_delay > 0:
+            self.shot_delay -= 1
+
+        if keys[pygame.K_SPACE] and self.shot_delay == 0:
+            bullet = Bullet(self.player.x + self.player.width, self.player.y + self.player.height // 2)
+            self.bullets.append(bullet)
+            self.shot_delay = 15
+
+    def spawn_target(self):
+        if self.target_spawn_timer <= 0:
+            y = randint(0,self.height -50)
+            target = Target(self.width, y, self.target_speed)
+            self.targets.append(target)
+            self.target_spawn_timer = self.target_spawn_delay
+        else:
+            self.target_spawn_timer -= 1
+
+    def update_bullets(self):
+        for bullet in self.bullets[:]:
+            bullet.update()
+            if bullet.is_off_screen(self.width):
+                self.bullets.remove(bullet)
+
+    def update_target(self):
+        for target in self.targets[:]:
+            target.update()
+            if target.is_off_screen():
+                self.targets.remove(target)
+
+    def check_collisions(self):
+        for bullet in self.bullets[:]:
+            for target in self.targets[:]:
+                if target.check_collision(bullet):
+                    self.bullets.remove(bullet)
+                    self.targets.remove(target)
+                    self.score += 10
+                    if self.score % 30 == 0:
+                        self.target_speed += 0.5
+                        if self.target_spawn_delay > 30:
+                            self.target_spawn_delay -= 5
+                    break
+
+    def draw_ui(self):
+        score_text = self.font.render(f"Score: {self.score}", True, (0, 0, 0))
+        speed_text = self.font.render(f"Speed: {self.target_speed:.1f}", True, (0, 0, 0))
+        self.screen.blit(score_text, (10, 10))
+        self.screen.blit(speed_text, (10,50))
+
+    def draw(self):
+        self.screen.fill((255, 255, 255))
+
+        self.player.draw(self.screen)
+        for bullet in self.bullets:
+            bullet.draw(self.screen)
+
+        for target in self.targets:
+            target.draw(self.screen)
+
+        self.draw_ui()
 
     def run(self):
         running = True
@@ -85,26 +158,18 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
-            self.screen.fill((255,255,255))
+            self.keyboard_input_handlers()
+            self.spawn_target()
+            self.update_bullets()
+            self.update_target()
+            self.check_collisions()
 
-            self.bullet.keyboard_bullet_handler(self.player.x, self.player.y)
-            self.bullet.update(self.width, self.bullet, self.player, self.target)
-
-            self.player.keyboard_player_handler(self.height)
-            self.player.draw(self.screen)
-
-            for boll in self.bullet.bullets:
-                boll.draw(self.screen)
-
-            self.target.draw(self.screen, self.bullet)
-
-
+            self.draw()
 
             pygame.display.flip()
             self.clock.tick(60)
 
         pygame.quit()
-
 
 
 if __name__ == "__main__":
