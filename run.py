@@ -21,67 +21,72 @@ class Player: # Responsible for creating figures and managing the figures that t
                 self.y += self.speed
 
     def draw(self, screen):
-        pygame.draw.rect(screen,
-                         (255, 0, 0),
-                         (self.x, self.y, self.width, self.height)
-                         )
+        pygame.draw.rect(screen,(255, 0, 0),(self.x, self.y, self.width, self.height))
 
 class Bullet:
-    def __init__(self, x=0, y=0 ):
+    def __init__(self, x, y ):
         self.x = x
         self.y = y
         self.radius = 3
         self.speed = 3
-        self.shot_delay = 0
-        self.bullets = []
 
-    def keyboard_bullet_handler(self,  player_x, player_y):
-        keys = pygame.key.get_pressed()
+        # self.shot_delay = 0
+        # self.bullets = []
 
-        if self.shot_delay > 0:
-            self.shot_delay -= 1
+    def update(self):
+        self.x += self.speed
 
-        if keys[pygame.K_SPACE] and self.shot_delay == 0:
-            bullet = Bullet(
-                player_x + 20,
-                player_y + 10
-            )
-            self.bullets.append(bullet)
-            self.shot_delay = 15
-
-
-    def update(self, width, bullet, player, target):
-        for bull in bullet.bullets[:]:
-
-            bull.x += bull.speed
-            if bull.x >= width:
-                bull.speed *= -1
-            if (bull.x <= player.x + player.width and
-                    bull.y >= player.y and
-                    bull.y + bull.radius <= player.y + player.height
-            ):
-                bull.speed *= -1
-            elif (
-                    bull.x + bull.radius >= target.x  and
-                    bull.y >= target.y and
-                    bull.y + bull.radius <= target.y + target.height
-            ):
-                print("boow")
-                target.width -= 0.1
-                target.height -= 0.1
-                bullet.bullets.remove(bull)
-                continue
-            elif bull.x < player.x:
-                bullet.bullets.remove(bull)
-                continue
-
-
+    def is_of_screen(self, width):
+        return self.x > width
 
     def draw(self, screen):
-        pygame.draw.circle(screen,
-                        (255, 0, 0),
-                            (self.x,self.y),self.radius
-                           )
+        pygame.draw.circle(screen,(255, 0, 0),(self.x, self.y), self.radius)
+
+
+    # def keyboard_bullet_handler(self,  player_x, player_y):
+    #     keys = pygame.key.get_pressed()
+    #
+    #     if self.shot_delay > 0:
+    #         self.shot_delay -= 1
+    #
+    #     if keys[pygame.K_SPACE] and self.shot_delay == 0:
+    #         bullet = Bullet(
+    #             player_x + 20,
+    #             player_y + 10
+    #         )
+    #         self.bullets.append(bullet)
+    #         self.shot_delay = 15
+
+
+
+
+        # for bull in bullet.bullets[:]:
+        #
+        #     bull.x += bull.speed
+        #     if bull.x >= width:
+        #         bull.speed *= -1
+        #     if (bull.x <= player.x + player.width and
+        #             bull.y >= player.y and
+        #             bull.y + bull.radius <= player.y + player.height
+        #     ):
+        #         bull.speed *= -1
+        #     elif (
+        #             bull.x + bull.radius >= target.x  and
+        #             bull.y >= target.y and
+        #             bull.y + bull.radius <= target.y + target.height
+        #     ):
+        #         print("boow")
+        #         target.width -= 0.1
+        #         target.height -= 0.1
+        #         bullet.bullets.remove(bull)
+        #         continue
+        #     elif bull.x < player.x:
+        #         bullet.bullets.remove(bull)
+        #         continue
+
+
+
+
 class Target:
     def __init__(self, width, height):
         self.x = width
