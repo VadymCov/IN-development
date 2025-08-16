@@ -1,8 +1,6 @@
-
 import pygame
 
-class Player: # Responsible for creating figures and managing the figures that the player controls
-
+class Player:
     def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
@@ -30,78 +28,39 @@ class Bullet:
         self.radius = 3
         self.speed = 3
 
-        # self.shot_delay = 0
-        # self.bullets = []
-
     def update(self):
         self.x += self.speed
 
-    def is_of_screen(self, width):
+    def is_off_screen(self, width):
         return self.x > width
 
     def draw(self, screen):
-        pygame.draw.circle(screen,(255, 0, 0),(self.x, self.y), self.radius)
-
-
-    # def keyboard_bullet_handler(self,  player_x, player_y):
-    #     keys = pygame.key.get_pressed()
-    #
-    #     if self.shot_delay > 0:
-    #         self.shot_delay -= 1
-    #
-    #     if keys[pygame.K_SPACE] and self.shot_delay == 0:
-    #         bullet = Bullet(
-    #             player_x + 20,
-    #             player_y + 10
-    #         )
-    #         self.bullets.append(bullet)
-    #         self.shot_delay = 15
-
-
-
-
-        # for bull in bullet.bullets[:]:
-        #
-        #     bull.x += bull.speed
-        #     if bull.x >= width:
-        #         bull.speed *= -1
-        #     if (bull.x <= player.x + player.width and
-        #             bull.y >= player.y and
-        #             bull.y + bull.radius <= player.y + player.height
-        #     ):
-        #         bull.speed *= -1
-        #     elif (
-        #             bull.x + bull.radius >= target.x  and
-        #             bull.y >= target.y and
-        #             bull.y + bull.radius <= target.y + target.height
-        #     ):
-        #         print("boow")
-        #         target.width -= 0.1
-        #         target.height -= 0.1
-        #         bullet.bullets.remove(bull)
-        #         continue
-        #     elif bull.x < player.x:
-        #         bullet.bullets.remove(bull)
-        #         continue
-
-
-
+        pygame.draw.circle(screen,(255, 0, 0),(int(self.x), int(self.y)), self.radius)
 
 class Target:
-    def __init__(self, width, height):
-        self.x = width
-        self.y = height
+    def __init__(self, x, y, speed=1):
+        self.x = x
+        self.y = y
         self.width = 50
         self.height = 50
-        self.speed = 0.01
+        self.speed = speed
 
 
-    def draw(self, screen, bullet):
-        if self.x > 0:
-            self.x -= self.speed
+    def draw(self, screen):
+        pygame.draw.rect(screen, (255, 0, 0),(self.x, self.y, self.width, self.height))
 
-        pygame.draw.rect(screen, (255, 0, 0),
-                         (self.x, self.y, self.width, self.height))
+    def update(self):
+        self.x -= self.speed
+
+    def check_collision(self, bullet):
+        return (bullet.x + bullet.radius >= self.x and
+                bullet.x - bullet.radius <= self.x + self.width and
+                bullet.y + bullet.radius <= self.y and
+                bullet.y - bullet.radius >= self.y + self.height)
+
+
+    def is_off_screen(self):
+        return self.x + self.width < 0
 
 class Game:
 
