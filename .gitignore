@@ -11,4 +11,4 @@ __pycache__/
 .vscode/
 
 #SQLite database file
-*.sqlite3
+**/db.sqlite3
