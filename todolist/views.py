@@ -4,3 +4,4 @@ from .models import Task
 
 def index(request):
     task = Task.objects.all()
+    return render(request, 'index.html', {'task': task, 'title': 'Todo List'})
