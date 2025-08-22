@@ -10,5 +10,6 @@ def index(request):
 @require_POST
 def add(request):
     task_name = request.POST.get("task_name")
-    Task.objects.create(title = task_name)
+    if task_name:
+        Task.objects.create(title = task_name)
     return redirect('index')
