@@ -2,7 +2,7 @@
 
 A simple and elegant todo list application built with Django and Semantic UI. Add tasks, mark them as complete, and delete them with a clean, responsive interface.
 
-![Screenshot](imeges/Screenshot%20.png)
+![Screenshot](images/Screenshot%20.png)
 ## Features
 
 - ✅ Add new tasks
