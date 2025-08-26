@@ -1,5 +1,67 @@
 {% extends "base.html" %}
-{block content}
-    <h1>Hello</h1>
-    <p>Hello</p><
-{endblock}
+
+{% block content %}
+    <div class="ui center aligned container ">
+            <header>
+                <h1 class="ui header ">Welcome! Add, Complete, and Conquer Your Tasks</h1>
+            </header>
+
+            <form action={% url "add" %} method="post" >  
+                {% csrf_token %}
+                <div class="ui action input input_style">
+                    <input type="text" name="task_name" placeholder="enter the task name", required >
+                    <button type="submit" class="ui primary button">add</button>
+                </div>
+            </form>
+
+            <header>
+                <h2 class="ui header ">list of all tasks</h2>
+            </header>
+    </div>
+
+    <div class="ui text container ui segment" style="padding-right: 2px">
+
+        {% for task in tasks  %}
+
+        <div class="flex-container">
+
+            {% if not task.is_complete %}    
+                <div class="task-title " > 
+                        {{ task.title }}
+                    <div class="ui divider"></div>
+                </div>
+
+                    <form action={% url "update" task.id %} method="post">
+                        {% csrf_token %}
+                        <button type="submit" href="{% url "update" task.id %}" class="positive tiny ui button ">complete</button>
+                    </form>
+
+                    <form action={% url "delete" task.id %} method="post">
+                        {% csrf_token %}
+                        <button type="submit" href="{% url "delete" task.id %}" class="negative mini ui button">delete</button>
+                    </form>
+
+            {% else %}
+                <div class="task-title " > 
+                        <del>{{ task.title }}</del>
+                    <div class="ui divider"></div>
+                </div>
+
+                        <form action={% url "update" task.id %} method="post">
+                            {% csrf_token %}
+                            <button type="submit" href="{% url "update" task.id %}" class="tiny ui button ">cancel</button>
+                        </form>
+
+                        <form action={% url "delete" task.id %} method="post">
+                            {% csrf_token %}
+                            <button type="submit" href="{% url "delete" task.id %}" class="negative mini ui button">delete</button>
+                        </form>
+
+            {% endif %}
+        </div>
+            {% empty %}
+                <p> task list is empty</p>
+            
+        {% endfor %}
+    </div>
+{% endblock %}
