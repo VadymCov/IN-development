@@ -96,7 +96,7 @@ The app features a clean interface with:
 
 ## Future Enhancements
 
-- [ ] User authentication
+- [✅] User authentication
 - [ ] Task categories
 - [ ] Due dates
 - [ ] Task priority levels
@@ -108,6 +108,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Contact
 
-Your Name - your.email@example.com
+Vadym - vadymkravtcsov@gmail.com
 
-Project Link: [https://github.com/yourusername/django-todo-app](https://github.com/yourusername/django-todo-app)
+Project Link: [https://github.com/VadymCov/in-development.git](https://github.com/VadymCov/in-development.git)
