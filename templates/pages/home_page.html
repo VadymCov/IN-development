@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+  {% block content %}
+  <div>
+    <header>
+      <h1>TaskManager</h1>
+      <p>Organize your tasks. Work more efficiently.</p>
+    </header>
+    <section class="hero">
+      <h2>Welcome!</h2>
+      <p>Create, track, and manage tasks—all in one place.</p>
+      <div class="cta">
+        <a class="ui primary button" href="{% url 'accounts:registry' %}">Registration</a>
+        <a class="ui primary button" href="{% url 'accounts:login' %}">Login</a>
+      </div>
+    </section>
+  </div>
+  {%endblock content%}
