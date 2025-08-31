@@ -110,4 +110,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 Vadym - vadymkravtcsov@gmail.com
 
-Project Link: [https://github.com/VadymCov/in-development.git](https://github.com/VadymCov/in-development.git)
+Project Link: [https://github.com/VadymCov/in-development.git](https://github.com/VadymCov/in-development-django-todo-list)
