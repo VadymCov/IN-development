@@ -1,0 +1,10 @@
+.centered-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+}
+
+.number-task {
+  font-size: 2em;
+}
