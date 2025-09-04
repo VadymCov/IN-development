@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Count
 
 # Create your models here.
 
@@ -19,3 +20,14 @@ class Profiles(models.Model):
         if full_name:
             return f"{self.user.username} {full_name}"
         return self.user.username
+    
+    @property
+    def task_stats(self):
+        from todolist.models import Task
+
+        return Task.objects.filter(user=self.user).aggregate(
+            total=Count('id'),
+            completed=Count('id', filter=models.Q(is_complete=True)),
+            not_completed=Count('id', filter=models.Q(is_complete=False))
+
+        )
