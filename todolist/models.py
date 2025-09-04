@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Task(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_tasks')
     title = models.CharField("Task", max_length=200)
     description = models.TextField(blank=True)
     create_at = models.DateTimeField(auto_now_add=True)
