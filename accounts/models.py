@@ -6,7 +6,7 @@ from django.db.models import Count, Q
 
 class Profiles(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    avatar = models.ImageField(upload_to='avatar/', blank=True)
+    avatar = models.ImageField(upload_to='avatar/', blank=True, default='avatars/default.jpg')
     telephone = models.CharField(max_length=20, blank=True)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
