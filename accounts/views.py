@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views import generic
 from django.urls import reverse_lazy
-from todolist.models import Task
-from .forms import RegisterForm
+from .forms import RegisterForm, ProfileEditForm
+from django.views import View
 from .models import Profiles
+from todolist.models import Task
 # Create your views here.
 
 class RegisterView(generic.CreateView):
@@ -23,3 +26,17 @@ def profile(request):
         'recent_tasks': recent_tasks
         })
 
+class ProfileEditView(LoginRequiredMixin, View):
+    template_name = 'accounts/edit_profile.html'
+
+    def get(self, request):
+        form = ProfileEditForm(user = request.user)
+        return render(request, self.template_name, {'form': form, 'title': 'Edit Profile'})
+    
+    def post(self, request):
+        form = ProfileEditForm(user=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile updated successfully")
+            return redirect('accounts:profile')
+        return render(request, self.template_name, {'form':form})
