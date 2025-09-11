@@ -24,8 +24,8 @@ class RegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["password1"].help_text = ""  
-        self.fields["password2"].help_text = ""  
+        self.fields["password1"].help_text = ""
+        self.fields["password2"].help_text = ""
         self.fields["password1"].widget.attrs['placeholder'] = 'Password (min. 8 characters, letters & numbers)'
         self.fields["password2"].widget.attrs['placeholder'] = 'Repeat password'
         self.fields["email"].widget.attrs['placeholder'] = 'you@example.com'
@@ -84,7 +84,7 @@ class ProfileEditForm(forms.Form):
         })
     )
     
-    dio = forms.CharField(
+    bio = forms.CharField(
         max_length=500,
         required=False,
         widget=forms.Textarea(attrs={
@@ -115,7 +115,7 @@ class ProfileEditForm(forms.Form):
             if hasattr(user, 'profile'):
                 profile = user.profile
                 self.fields['telephone'].initial = profile.telephone
-                self.fields['dio'].initial = profile.bio
+                self.fields['bio'].initial = profile.bio
                 self.fields['birth_date'].initial = profile.birth_date
                 
     def clean_email(self):
