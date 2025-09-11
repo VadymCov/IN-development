@@ -102,6 +102,30 @@ class ProfileEditForm(forms.Form):
         })
     )
     
+    old_password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Current password'
+        })
+    )
+
+    new_password1 = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'New password'
+
+        })
+    )
+
+    new_password2 = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Confirm new password'
+        })
+    )
     
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -147,12 +171,39 @@ class ProfileEditForm(forms.Form):
 
         return birth_date
     
+    def clean(self):
+        cleaned_data = super().clean()
+        old_pass = cleaned_data.get('old_password')
+        new_pass1= cleaned_data.get('new_password1')
+        new_pass2 = cleaned_data.get('new_password2')
+
+        if any([old_pass, new_pass1, new_pass2]):
+            if not all([old_pass, new_pass1, new_pass2]):
+                raise ValidationError("Fill all password fields to change password")
+            
+            if not self.user.check_password(old_pass):
+                raise ValidationError("Current password is incorrect")
+
+            if new_pass1 != new_pass2:
+                raise ValidationError("New password don't match")
+
+            if new_pass1 and len(new_pass1) < 8:
+                raise ValidationError("Password must be at least 8 characters")
+            
+        return cleaned_data
+
     def save(self):
 
         self.user.first_name = self.cleaned_data['first_name']
         self.user.last_name = self.cleaned_data['last_name']
         self.user.email = self.cleaned_data['email']
         self.user.save()
+        
+        if self.cleaned_data.get('new_password1'):
+            self.user.set_password(self.cleaned_data['new_password1'])
+
+        self.user.save()
+
         
         profile, created = Profiles.objects.get_or_create(user=self.user)
 
