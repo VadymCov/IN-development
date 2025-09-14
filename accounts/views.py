@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
@@ -19,9 +19,11 @@ class RegisterView(generic.CreateView):
 def profile(request):
     profiles = Profiles.objects.all()
     recent_tasks = Task.objects.filter(created_by=request.user).order_by('-create_at')[:3] 
+    user_profile = get_object_or_404(Profiles, user=request.user)
     
     return render(request, 'accounts/profile.html', {
         'profiles': profiles,
+        'profile': user_profile,
         'title': 'Profiles',
         'recent_tasks': recent_tasks
         })
