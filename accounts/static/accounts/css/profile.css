@@ -1,10 +1,20 @@
-.centered-header {
+.page-center {
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 80px;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  padding-top: 50px; 
 }
 
-.number-task {
-  font-size: 2em;
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.transparent-segment {
+    position: relative;
+    text-align: center;
+    background-color: rgba(157, 157, 157, 0.594) !important;
+
 }
