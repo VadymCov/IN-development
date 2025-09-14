@@ -1,113 +1,66 @@
-# Django Todo List App
+# 📝 Django ToDo List Project
 
-A simple and elegant todo list application built with Django and Semantic UI. Add tasks, mark them as complete, and delete them with a clean, responsive interface.
-
-![Screenshot](images/Screenshot%20.png)
-## Features
-
-- ✅ Add new tasks
-- ✅ Mark tasks as complete/incomplete
-- ✅ Delete tasks
-- ✅ Responsive design with Semantic UI
-- ✅ Clean and intuitive interface
-- ✅ Task validation (minimum 5 characters)
-
-## Tech Stack
-
-- **Backend**: Django 5.2.5
-- **Frontend**: Semantic UI 2.5.0
-- **Database**: SQLite
-- **Language**: Python 3.x
-
-## Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd <project-name>
-   ```
-
-2. **Create virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install django
-   ```
-
-4. **Run migrations**
-   ```bash
-   python manage.py migrate
-   ```
-
-5. **Start the development server**
-   ```bash
-   python manage.py runserver
-   ```
-
-6. **Open your browser**
-   Navigate to `http://127.0.0.1:8000`
-
-## Project Structure
+## 📂 Project Structure
 
 ```
 mysite/
-├── manage.py
-├── mysite/
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── todolist/
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   ├── templates/
-│   └── static/
-└── templates/
-    └── base.html
+├── accounts/           # User accounts app (registration, login, profile)
+│   ├── static/         # App-specific static files (CSS)
+│   ├── templates/      # App-specific templates
+│   └── migrations/     # Django migrations
+├── todolist/           # ToDo list app (tasks, dashboard)
+│   ├── static/         # App-specific static files (CSS, JS)
+│   ├── templates/      # App-specific templates
+│   └── migrations/     # Django migrations
+├── media/              # Uploaded media files (avatars)
+├── static/             # Project-wide static files (CSS, images)
+├── templates/          # Project-wide templates
+├── screenshots/        # Project screenshots (see below)
+├── db.sqlite3          # SQLite database (ignored by git)
+├── manage.py           # Django management script
+└── requirements.txt    # Python dependencies
 ```
 
-## Usage
+## 🚀 Features
+- User registration, login, and profile management
+- Avatar upload and profile editing
+- Task dashboard: add, edit, delete, and view tasks
+- Responsive UI with custom CSS
 
-1. **Add a task**: Enter task name (minimum 5 characters) and click "Add"
-2. **Complete a task**: Click the green "Complete" button
-3. **Incomplete a task**: Click the "Cancel" button on completed tasks
-4. **Delete a task**: Click the red "Delete" button
+## 🖼️ Screenshots
+Screenshots of the application are available in the `screenshots/` folder:
 
-## Screenshots
+| Landing Page | Task Dashboard | Task Management |
+|:------------:|:--------------:|:---------------:|
+| ![Landing](screenshots/01-landing-page.png) | ![Dashboard](screenshots/02-task-dashboard-empty.png) | ![Task Management](screenshots/03-task-management.png) |
 
-The app features a clean interface with:
-- Centered header with welcome message
-- Input field with add button
-- Task list with complete/delete actions
-- Completed tasks shown with strikethrough
-- Responsive flexbox layout
+| Profile Editor | User Registration | User Login | User Profile |
+|:--------------:|:----------------:|:----------:|:------------:|
+| ![Profile Editor](screenshots/04-profile-editor.png) | ![Registration](screenshots/05-user-registration.png) | ![Login](screenshots/06-user-login.png) | ![Profile](screenshots/07-user-profile.png) |
 
-## Contributing
+## ⚙️ Quick Start
+1. **Clone the repository:**
+   ```sh
+   git clone <your-repo-url>
+   cd mysite
+   ```
+2. **Install dependencies:**
+   ```sh
+   pip install -r requirements.txt
+   ```
+3. **Apply migrations:**
+   ```sh
+   python manage.py migrate
+   ```
+4. **Run the development server:**
+   ```sh
+   python manage.py runserver
+   ```
+5. **Open in browser:**
+   Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## 🙌 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-## Future Enhancements
-
-- [✅] User authentication
-- [ ] Task categories
-- [ ] Due dates
-- [ ] Task priority levels
-- [ ] Search functionality
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## Contact
-
-Vadym - vadymkravtcsov@gmail.com
-
-Project Link: [https://github.com/VadymCov/in-development.git](https://github.com/VadymCov/in-development-django-todo-list)
+## 📄 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
