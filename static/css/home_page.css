@@ -1,0 +1,42 @@
+body {
+     font-family: Helvetica, sans-serif;
+     background-image: url( "/static/images/background.jpg" );
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+}
+
+.glass-segment {
+     background-color: rgba(69, 72, 73, 0.844) !important;
+
+}
+
+.masthead h1.ui.header {
+    margin-top: 1em;
+    margin-bottom: 0em;
+    font-size: 4em;
+    font-weight: normal;
+}
+
+.hero { margin: 2rem auto;
+     max-width: 600px;
+     text-align: center;
+     }
+
+.cta {
+     margin: 2rem 0; 
+    }
+
+.cta button { 
+     padding: 0.8rem 2rem;
+     font-size: 1rem;
+     border: none;
+     border-radius: 6px;
+     background: #0263e0;
+     color: #fff;
+     cursor: pointer; } 
+
+.ui.small.menu {
+     background-color: rgba(76, 75, 75, 0.263) !important;
+}
