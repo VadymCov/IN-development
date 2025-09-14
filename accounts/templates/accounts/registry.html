@@ -1,50 +1,51 @@
 {% extends "base.html" %} {% block content %}
-
-<div class="ui middle aligned center aligned grid" style="min-height: 100vh">
-  <div class="column" style="max-width: 450px">
-    <form
-      action="{% url 'accounts:registry' %}"
-      method="post"
-      class="ui large form"
-    >
-      {% csrf_token %}
-      <div class="ui stacked segment">
-        <div class="two fields">
-          <div class="field">
-            <label>First name</label>
-            {{ form.first_name }}
+<div class="page-center">
+  <div class="ui container">
+    <div class="form-container">
+      <form
+        action="{% url 'accounts:registry' %}"
+        method="post"
+        class="ui large form"
+      >
+        {% csrf_token %}
+        <div class="ui raised segment transparent-segment">
+          <div class="two fields">
+            <div class="field">
+              <label>First name </label>
+              {{ form.first_name }}
+            </div>
+            <div class="field">
+              <label>Last name</label>
+              {{ form.last_name }}
+            </div>
           </div>
           <div class="field">
-            <label>Last name</label>
-            {{ form.last_name }}
+            <label>User name</label>
+            {{ form.username }}
           </div>
+          <div class="field">
+            <label>Email</label>
+            {{ form.email }}
+          </div>
+          <div class="field">
+            <label>Password</label>
+            {{ form.password1 }}
+          </div>
+          <div class="field">
+            <label>Password confirm</label>
+            {{ form.password2 }} {{ form.password2.errors }}
+          </div>
+          <button type="submit" class="ui fluid large primary button">
+            register
+          </button>
+          <hr class="ui divider" />
+          <p>
+            You already have account?
+            <a href="{% url 'accounts:login'%}">Login</a>
+          </p>
         </div>
-        <div class="field">
-          <label>User name</label>
-          {{ form.username }}
-        </div>
-        <div class="field">
-          <label>Email</label>
-          {{ form.email }}
-        </div>
-        <div class="field">
-          <label>Password</label>
-          {{ form.password1 }}
-        </div>
-        <div class="field">
-          <label>Password confirm</label>
-          {{ form.password2 }} {{ form.password2.errors }}
-        </div>
-        <button type="submit" class="ui fluid large primary button">
-          register
-        </button>
-        <hr class="ui divider" />
-        <p>
-          You already have account?
-          <a href="{% url 'accounts:login'%}">Login</a>
-        </p>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 

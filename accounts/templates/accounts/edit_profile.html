@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% block content %}
+<div class="page-center">
+  <div class="form-container">
+    <form
+      action="{% url 'accounts:edit_profile' %}"
+      method="post"
+      enctype="multipart/form-data"
+      class="ui large form"
+    >
+      {% csrf_token %}
+      <div class="ui raised segment transparent-segment">
+        <div class="field">
+          <input type="file" name="avatar" id="avatar" style="display: none" />
+          <label for="avatar" class="ui button">
+            <i class="upload icon"></i> Upload Avatar
+          </label>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>First name</label>
+            {{ form.first_name }}
+          </div>
+          <div class="field">
+            <label>Last name</label>
+            {{ form.last_name }}
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          {{ form.email }}
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Phone</label>
+            {{ form.telephone }}
+          </div>
+          <div class="field">
+            <label>Birth date</label>
+            {{ form.birth_date }}
+          </div>
+        </div>
+        <div class="field">
+          <label>Current Password</label>
+          {{ form.old_password }}
+        </div>
+        <div class="field">
+          <label>New Password</label>
+          {{ form.new_password1 }}
+        </div>
+        <div class="field">
+          <label>Confirm new password</label>
+          {{ form.new_password2 }}
+        </div>
+        <div class="field">{{ form.bio }}</div>
+        <button type="submit" class="ui fluid large primary button">
+          change
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

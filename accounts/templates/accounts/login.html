@@ -1,27 +1,29 @@
 {% extends "base.html" %} {% block content %}
-<div class="ui middle aligned center aligned grid" style="min-height: 100vh">
-  <div class="column" style="max-width: 450px">
-    <form method="post" class="ui large form">
-      {% csrf_token %}
-      <div class="ui stacked segment">
-        <div class="field">
-          <label>User name</label>
-          {{ form.username }} {{ form.username.errors }}
+<div class="page-center">
+  <div class="ui container">
+    <div class="form-container">
+      <form method="post" class="ui large form">
+        {% csrf_token %}
+        <div class="ui stacked segment transparent-segment">
+          <div class="field">
+            <label>User name</label>
+            {{ form.username }} {{ form.username.errors }}
+          </div>
+          <div class="field">
+            <label>Password</label>
+            {{ form.password }} {{ form.password.errors }}
+          </div>
+          <button type="submit" class="ui fluid large primary button">
+            Login
+          </button>
+          <hr class="ui divider" />
+          <p>
+            Don't have an account?
+            <a href="{% url 'accounts:registry'%}">Sign up here</a>
+          </p>
         </div>
-        <div class="field">
-          <label>Password</label>
-          {{ form.password }} {{ form.password.errors }}
-        </div>
-        <button type="submit" class="ui fluid large primary button">
-          Login
-        </button>
-        <hr class="ui divider" />
-        <p>
-          Don't have an account?
-          <a href="{% url 'accounts:registry'%}">Sign up here</a>
-        </p>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock content %}

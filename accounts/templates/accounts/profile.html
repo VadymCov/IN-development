@@ -1,82 +1,135 @@
 {% extends "base.html" %} {% block content %}
-<div class="ui container" style="padding: 20px">
-  <div class="ui segment centered-header">
-    <h1 class="ui header">
-      <i class="user circle icon"></i>
-      User profile
-    </h1>
-  </div>
-  <div class="ui stackable two column grid">
-    <div class="column">
-      <div class="ui raised segment">
-        <div class="ui center aligned basic segment">
-          <img src="" alt="Avatar" />
-          <h2>{{ user.get_full_name }}</h2>
-          <p>@{{ user.username }}</p>
-        </div>
-        <div class="ui horizontal divider">Personal information</div>
-        <div class="ui relaxed list" style="text-align: left">
-          <div class="item">
-            <i class="user icon"></i>
-            <div class="content">
-              <strong>Name: </strong>{{ user.first_name }}
+<div class="page-center">
+  <div class="ui container">
+    <div class="ui stackable two column grid ">
+      <div class="column">
+        <div class="ui raised segment transparent-segment">
+          <div class="ui center aligned basic segment">
+            <img src="{{ profile.avatar.url }}" alt="Avatar" width="100" />
+            <h2>{{ user.get_full_name }}</h2>
+            <p>@{{ user.username }}</p>
+          </div>
+          <div class="ui horizontal divider">Personal information</div>
+          <div class="ui relaxed list" style="text-align: left">
+            <div class="item">
+              <i class="user icon"></i>
+              <div class="content">
+                <strong>Name: </strong>{{ user.first_name }}
+              </div>
             </div>
-          </div>
-          <div class="item">
-            <i class="user icon"></i>
-            <div class="content">
-              <strong>Last name: </strong>{{ user.last_name }}
+            <div class="item">
+              <i class="user icon"></i>
+              <div class="content">
+                <strong>Last name: </strong>{{ user.last_name }}
+              </div>
             </div>
-          </div>
-          <div class="item">
-            <i class="mail icon"></i>
-            <div class="content"><strong>Email: </strong>{{ user.email }}</div>
-          </div>
-          <div class="item">
-            <i class="calendar icon"></i>
-            <div class="content">
-              <strong>Data of registration</strong>{{ user.last_login }}
+            <div class="item">
+              <i class="mail icon"></i>
+              <div class="content">
+                <strong>Email: </strong>{{ user.email }}
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="column">
-      <div class="ui segment">
-        <h3 class="ui header">
-          <i class="chart bar icon"></i>
-          Task statistics
-        </h3>
-        <div class="ui three column grid">
-          <div class="column">
-            <div class="number-task">0</div>
-            <div>All task</div>
-          </div>
-          <div class="column">
-            <div class="number-task">0</div>
-            <div>Completed tasks</div>
-          </div>
-          <div class="column">
-            <div class="number-task">0</div>
-            <div>In process</div>
+            <div class="item">
+              <i class="phone icon"></i>
+              <div class="content">
+                <strong>Phone: </strong> {{ profile.telephone }}
+              </div>
+            </div>
+            <div class="item">
+              <i class="calendar icon"></i>
+              <div class="content">
+                <strong>Data of registration</strong>{{ user.last_login }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="column">
-      <div class="ui segment">
-        <h3 class="ui header">
-          <i class="settings icon"></i>
-          Settings
-        </h3>
-      </div>
-    </div>
-    <div class="column">
-      <div class="ui segment">
-        <h3 class="ui header">
-          <i class="tasks icon" ></i>
-          Last task
-        </h3>
+      <div class="column">
+        <div class="ui raised segment transparent-segment">
+          <div class="ui horizontal divider">
+            <i class="chart bar icon"></i>
+            <strong>Task statistics</strong>
+          </div>
+          <div class="ui three column grid">
+            {% with stats=user.profile.task_stats %}
+            <div class="column">
+              <div class="number-task">{{ stats.total }}</div>
+              <div>All task</div>
+            </div>
+            <div class="column">
+              <div class="number-task">{{ stats.completed }}</div>
+              <div>Completed tasks</div>
+            </div>
+            <div class="column">
+              <div class="number-task">{{ stats.not_completed }}</div>
+              <div>In process</div>
+            </div>
+            {% endwith %}
+          </div>
+        </div>
+
+        <div class="ui raised segments transparent-segment">
+          <div class="ui segment transparent-segment">
+            <div class="ui horizontal divider">
+              <i class="tasks icon"></i>
+              <strong>Last</strong>
+            </div>
+          </div>
+
+          {% for recent_task in recent_tasks %} {% if recent_task.is_complete %}
+          <div class="item">
+            <div class="ui green segment transparent-segment">
+              <strong class="task-title-recent">{{ recent_task }} </strong>
+            </div>
+          </div>
+
+          {% else %}
+          <div class="item">
+            <div class="ui red segment transparent-segment">
+              <strong class="task-title-recent"> {{ recent_task }} </strong>
+            </div>
+          </div>
+
+          {% endif %} {% endfor %}
+        </div>
+
+        <div class="column">
+          <div class="ui raised segment transparent-segment">
+            <h3 class="ui horizontal divider">
+              <i class="settings icon"></i>
+              Settings
+            </h3>
+            <div class="ui three column grid">
+              <div class="column">
+                <a
+                  href="{% url 'accounts:edit_profile' %}"
+                  class="ui inverted  button"
+                >
+                  <i class="edit icon"></i>
+                  Edit profile
+                </a>
+              </div>
+              <div class="column">
+                <a
+                  href="{% url 'todolist:task_add_form' %}"
+                  class="ui inverted green button"
+                >
+                  <i class="tasks icon"></i>
+                  Add task
+                </a>
+              </div>
+              <div class="column">
+                <form method="post" action="{% url 'accounts:logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="ui inverted red button">
+                    <i class="sign out icon"></i>
+                    Go out
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
