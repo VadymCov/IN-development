@@ -1,19 +1,50 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+<!DOCTYPE html>
 
-</head>
-<body>
-    <div class="ui container">
-        {% block content %} {% endblock %}
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{{ title }}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'todolist/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/home_page.css' %}" />
+    <link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}" />
+  </head>
+  <body>
+    {% block menu %}
+    <div class="ui small menu" style="opacity: 0.8">
+      <a href="{% url 'accounts:profile' %}" class="active item">
+        <i class="user circle icon"></i> Profile
+      </a>
+      <a href="{% url 'todolist:index' %}" class="item">
+        <i class="tasks icon"></i> Tasks
+      </a>
+      <div class="right menu">
+        <form method="post" action="{% url 'accounts:logout' %}">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="ui tiny negative basic button"
+            style="margin: 3px"
+          >
+            <i class="sign out icon"></i>
+            Go out
+          </button>
+        </form>
+      </div>
     </div>
+    {% endblock menu %} {% block content %} {% endblock content %}
+    <script src="{% static 'todolist/js/task.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
-</body>
+  </body>
 </html>

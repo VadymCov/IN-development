@@ -1,17 +1,18 @@
-{% extends "base.html" %}
-  {% block content %}
-  <div>
-    <header>
-      <h1>TaskManager</h1>
-      <p>Organize your tasks. Work more efficiently.</p>
-    </header>
-    <section class="hero">
-      <h2>Welcome!</h2>
-      <p>Create, track, and manage tasks—all in one place.</p>
-      <div class="cta">
-        <a class="ui primary button" href="{% url 'accounts:registry' %}">Registration</a>
-        <a class="ui primary button" href="{% url 'accounts:login' %}">Login</a>
-      </div>
-    </section>
+{% extends "base.html" %} {% block menu %} {% endblock menu %} {% block content %}
+  <div class="ui inverted vertical masthead center aligned segment glass-segment">
+    
+    <div class="ui text container">
+      <h1 class="ui masthead inverted header">Welcome!</h1>
+      <h2>TaskManager</h2>
+      <h3>Create, track, and manage tasks—all in one place.</h3>
+    </div>
+
+    <div class="cta">
+      <a class="ui primary button" href="{% url 'accounts:registry' %}"
+        >Registration</a
+      >
+      <a class="ui primary button" href="{% url 'accounts:login' %}">Login</a>
+    </div>
   </div>
-  {%endblock content%}
+</div>
+{%endblock content%}
