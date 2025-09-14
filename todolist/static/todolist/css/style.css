@@ -1,5 +1,4 @@
 
-/* Style for input */
 .input_style {
     width: 100% ;
     box-sizing: border-box ;
@@ -7,31 +6,34 @@
     padding-bottom: 20px;
 }   
 
-/* Centering the segment content */
-.ui.segment {
-    position: relative;
-    text-align: center;
-}
-/* Button of the right center of the block */
-.right-button {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-/* Indent around the header */
+
 .ui.header {
     padding: 50px;
 }
-/* Task title: fixed width, word hyphenation */
+
 .task-title {
     width: 500px; 
     word-wrap: break-word;
+    
 }
-/* Flexible container: distribution of element across the width   */
+.task-title-recent {
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
 .flex-container {
     display: flex;
     gap: 10px;
     justify-content: space-between;
     align-items: center;
 }
+
+.ui.small.menu {
+    max-width: 1120px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
